@@ -13,7 +13,7 @@
 
 <h1>KnockoutJS</h1>
 
-<p>KnockoutJS is a library written in JavaScript that is based on MVVM pattern that helps developers building rich and responsive websites. This separates the application's Model (stored data), View (UI) and View Model (Javascript Representation of model).</p>
+<p>KnockoutJS is a library written in JavaScript that is based on MVVM pattern that helps developers building rich and responsive websites.</p>
 <p>KnockoutJS was developed and is maintained as an open source project by Steve Sanderson, a Microsoft employee on July5, 2010.</p>
 
 <h2>Architecture</h2>
@@ -26,7 +26,6 @@
 
 <h3>ViewModel</h3>
 <p>ViewModel is a Javascript object which contains necessary properties and functions to represent data. View and ViewModel are connected together with declarative data-bind concept used in HTML. This makes it easy to change HTML without changing ViewModel. KnockoutJS takes care of automatic data refresh between them through use of Observables.</p>
-<p>Synchronization of data is achieved through binding DOM elements to Data Model first using data-bind and then refreshing these two components through use of Observables. Dependency tracking is done automatically due to this synchronization of data. No extra coding is required to achieve it. KnockoutJS allows you to create direct connection between your display and underlying data.</p>
 <p>Custom bindings is used for application specific behaviors. This way knockout gives direct control of how you want to transform your data into HTML.</p>
 
 <h3>Model</h3>
@@ -57,7 +56,7 @@
 <p>Knockout is available through the Bower package manager</p>
 
 <h3>Content Delivery Networks (CDNs)</h3>
-<p>To give your users the fastest download speeds, you might instead prefer to reference knockout.js on one of the following third-party CDNs:</p>
+<p>To give users the fastest download speeds, prefer to reference knockout.js on one of the following third-party CDNs:</p>
 <ul>
     <li>Microsoft Ajax CDN</li>
     <li>CDNJS</li>
@@ -73,7 +72,7 @@
 <p>View-model declaration:</p>
 <pre>
 <code class="language-javascript">
-var myViewModel = {
+var viewModel = {
     personName: 'Bob',
     personAge: 123
 };
@@ -89,7 +88,7 @@ The name is &lt;span data-bind=&quot;text: personName&quot;&gt;&lt;/span&gt;
 <p>Apply binding:</p>
 <pre>
 <code class="language-javascript">
-ko.applyBindings(myViewModel);
+ko.applyBindings(viewModel);
 </code>
 </pre>
 <p>Rendered:</p>
@@ -102,7 +101,7 @@ The name is <span>Bob</span>
 <p>or:</p>
 <pre>
 <code class="language-javascript">
-ko.applyBindings(myViewModel, document.getElementById('someElementId'))
+ko.applyBindings(viewModel, document.getElementById('someElementId'))
 </code>
 </pre>
 
@@ -127,7 +126,7 @@ ko.applyBindings(myViewModel, document.getElementById('someElementId'))
 
 <pre>
 <code class="language-javascript">
-var myViewModel = {
+var viewModel = {
     personName: ko.observable('Bob'),
     personAge: ko.observable(123)
 };
@@ -137,7 +136,7 @@ var myViewModel = {
 <h4>Explicitly subscribing to observables</h4>
 <pre>
 <code class="language-javascript">
-myViewModel.personName.subscribe(function(newValue) {
+viewModel.personName.subscribe(function(newValue) {
     alert("The person's new name is " + newValue);
 });
 </code>
@@ -149,7 +148,7 @@ myViewModel.personName.subscribe(function(newValue) {
 To read value just call Observable property without parameters like:
 <pre>
 <code class="language-javascript">
-AppViewModel.yourName();
+viewModel.yourName();
 </code>
 </pre>
 
@@ -157,7 +156,7 @@ AppViewModel.yourName();
 To write/update value in Observable property, just pass the desired value in parameter like:
 <pre>
 <code class="language-javascript">
-AppViewModel.yourName('Bob');
+viewModel.yourName('Bob');
 </code>
 </pre>
 
@@ -165,7 +164,7 @@ AppViewModel.yourName('Bob');
 Multiple ViewModel properties can be updated in a single row with the help of chaining-syntax like:
 <pre>
 <code class="language-javascript">
-AppViewModel.yourName('Bob').yourAge(45);
+viewModel.yourName('Bob').yourAge(45);
 </code>
 </pre>
 
@@ -185,7 +184,7 @@ this.arrayName = ko.observableArray();    // It's an empty array
 
 <pre>
 <code class="language-javascript">
-function AppViewModel() {
+function ViewModel() {
     var me = this;
  
     me.firstName = ko.observable('Bob');
@@ -194,6 +193,16 @@ function AppViewModel() {
         return this.firstName() + " " + this.lastName();
     }, me);
 }
+</code>
+</pre>
+
+<p>A computed observable will be re-evaluated whenever one of the observables that it accessed in its last evaluation changes. Dependency detection is done each time that the computed observable is evaluated. In the snippet below, if enabled is true, then it will not depend on disabledHelp. However, if enabled becomes false, then it will no longer depend on enabledHelp and will start depending on disabledHelp.</p>
+<pre>
+<code class="language-javascript">
+//this computed observable will always depend on this.enabled and will additionally depend on either this.enabledHelp or this.disabledHelp.
+viewModel.helpText = ko.computed({
+    return this.enabled() ? this.enabledHelp() : this.disabledHelp();
+}, viewModel);
 </code>
 </pre>
 
@@ -213,23 +222,58 @@ The name is &lt;span data-bind=&quot;text: fullName&quot;&gt;&lt;/span&gt;
 </ul>
 
 
-<h3>Virtual Binding</h3>
+<h3>Dependency tracking</h3>
+<p>The tracking algorithm goes like this:</p>
+
+
+<h3>Deferred updates</h3>
+<p>In complex applications, with multiple, intertwined dependencies, updating a single observable might trigger a cascade of computed observables, manual subscriptions, and UI binding updates. These updates can be expensive and inefficient if unnecessary intermediate values are pushed to the view or result in extra computed observable evaluations.</p>
+<p>Using deferred updates ensures that computed observables and bindings are updated only after their dependencies are stable.</p>
+
+<ul>
+    <li>
+        <em>Standard</em> – Notifications happen immediately and synchronously. Dependencies are often notified of intermediate values.
+    </li>
+    <li>
+        <em>Deferred</em> – Notifications happen asynchronously, immediately after the current task and generally before any UI redraws.
+    </li>
+</ul>
+
+
 <pre>
     <code class="language-markup">
-&lt;ul&gt;
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;This item always appears&lt;/li&gt;
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- ko if: someExpressionGoesHere --&gt;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;I want to make this item present/absent dynamically&lt;/li&gt;
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- /ko --&gt;
-&lt;/ul&gt;
+ko.options.deferUpdates = true;
     </code>
 </pre>
+
+<p>Or, specifically making certain observables deferred:</p>
+<pre>
+    <code class="language-markup">
+this.data = ko.observableArray().extend({ deferred: true });
+    </code>
+</pre>
+
+
+
+
+<h2>Examples</h2>
+<ul>
+    <li>
+        <a class="" href="http://knockoutjs.com/documentation/deferred-updates.html" title="">Avoiding multiple UI updates</a>
+    </li>
+    <li>
+        <a class="" href="http://www.knockmeout.net/2011/06/lazy-loading-observable-in-knockoutjs.html" title="">Lazy Loading an Observable</a>
+    </li>
+</ul>
 
 
 
 <h3>References</h3>
 
 <ul>
+    <li>
+        <a class="reference" href="http://knockoutjs.com/" title="Steve Sanderson - Knockout.js">Knockout.js</a>
+    </li>
     <li>
         <a class="reference" href="https://vimeo.com/97519516" title="Steve Sanderson - Architecting large Single Page Applications with Knockout.js">Architecting large Single Page Applications with Knockout.js</a>
     </li>
