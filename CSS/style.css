@@ -1,0 +1,84 @@
+﻿html, form, body {
+	height: 100%; /* for container min-height */
+}
+
+body {
+	font: 62.5%/1.6 "Maiandra GD", "Lucida Grande", "Lucida Sans", "Lucida Sans Unicode", Verdana, sans-serif;
+	color: #333;
+	background: #fff;
+	line-height: 1.6;
+	position: relative; /* Fixes IE resize bug http://friendlybit.com/css/ie6-resize-bug/ */
+    font-size: 100%;
+}
+
+h1 {
+	font-size: 2.4em;
+	font-weight: normal;
+	color: #555;
+    border-bottom: 1px solid #333;
+}
+
+h2 {
+    margin-top: 1em;
+	font-size: 2.0em;
+	font-weight: normal;
+    border-bottom: 1px solid #333;
+}
+
+h3 {
+    margin-top: .5em;
+	font-size: 1.5em;
+	font-weight: bold;
+    border-bottom: 1px solid #999;
+}
+
+h4 {
+    margin-top: .5em;
+	font-size: 1.2em;
+	font-weight: bold;
+    border-bottom: 1px solid #999;
+}
+
+p {
+	margin: 1em 0;
+	font-size: 1em;
+	text-align: justify;
+	font-family: "Maiandra GD", "Gill Sans", Helvetica, Arial, sans-serif;
+}
+
+code {
+    display: block;
+    font-family: monospace;
+}
+
+pre[class*="language-"] {
+    padding: 0;
+    margin: 0;
+    overflow: auto;
+}
+
+.reference {
+    font-weight: 700;
+    color: #6f0f0f;
+    border-bottom: none;
+}
+
+.reference:visited,
+.reference:hover,
+.reference:link,
+.reference:active {
+    font-family: "Gill Sans", Helvetica, Arial, sans-serif;
+    font-style: normal;
+    font-size: 1em;
+    color: #470909;
+    text-decoration: none;
+    border-bottom: 1px dotted;
+}
+
+li {
+    font-size: 1em;
+}
+
+em {
+    font-weight: bold;
+}

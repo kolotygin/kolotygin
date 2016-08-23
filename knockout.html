@@ -1,0 +1,243 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>KnockoutJS</title>
+    <link rel="stylesheet" href="CSS/prism.css">
+    <link rel="stylesheet" href="CSS/style.css">
+    <script src="Scripts/prism.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+</head>
+<body>
+
+<h1>KnockoutJS</h1>
+
+<p>KnockoutJS is a library written in JavaScript that is based on MVVM pattern that helps developers building rich and responsive websites. This separates the application's Model (stored data), View (UI) and View Model (Javascript Representation of model).</p>
+<p>KnockoutJS was developed and is maintained as an open source project by Steve Sanderson, a Microsoft employee on July5, 2010.</p>
+
+<h2>Architecture</h2>
+<p>Model-View-ViewModel (MVVM) is an architectural design pattern for developing software applications. MVVM was developed by Microsoft Architect John Gossman in 2005.</p>
+<img src="Images/mvvm.png"/>
+
+<h3>View</h3>
+<p>View is nothing but User Interface created using HTML elements and CSS styling.</p>
+<p>HTML DOM elements are bound to data model using KnockoutJS. It provides two-way data binding between View and ViewModel using 'data-bind' concept, which means any updates done in UI are reflected in data model and any changes done in data model are reflected in UI.</p>
+
+<h3>ViewModel</h3>
+<p>ViewModel is a Javascript object which contains necessary properties and functions to represent data. View and ViewModel are connected together with declarative data-bind concept used in HTML. This makes it easy to change HTML without changing ViewModel. KnockoutJS takes care of automatic data refresh between them through use of Observables.</p>
+<p>Synchronization of data is achieved through binding DOM elements to Data Model first using data-bind and then refreshing these two components through use of Observables. Dependency tracking is done automatically due to this synchronization of data. No extra coding is required to achieve it. KnockoutJS allows you to create direct connection between your display and underlying data.</p>
+<p>Custom bindings is used for application specific behaviors. This way knockout gives direct control of how you want to transform your data into HTML.</p>
+
+<h3>Model</h3>
+<p>Model is domain data on server and it gets manipulated as and when request is sent/received from ViewModel.</p>
+<p>The data could be stored in database, cookie or other form of persistent storage. KnockoutJS does not worry about how it is stored. It is up to programmer to communicate between stored data and KnockoutJS.</p>
+
+
+<h2>Features</h2>
+
+<ul>
+    <li><em>Observables and dependency tracking</em> between them - DOM elements are connected to ViewModel via 'data-bind'. These two exchange information through Observables.</li>
+    <li><em>Declarative bindings</em> between UI and ViewModel a simple and obvious way to connect parts of your UI to your data model. You can construct a complex dynamic UIs easily using arbitrarily nested binding contexts.  DOM elements are connected to ViewModel via 'data-bind' concept.</li>
+    <li><em>Templating</em> to create re-usable components - Templating provides robust way to create complex web applications.</li>
+</ul>
+
+<h2>Additional benefits</h2>
+<ul>
+    <li>Pure JavaScript library - works with any server or client-side technology</li>
+    <li>Can be added on top of your existing web application without requiring major architectural changes</li>
+    <li>Compact - around 13kb after gzipping</li>
+    <li>Works on any mainstream browser (IE 6+, Firefox 2+, Chrome, Safari, Edge, others)</li>
+</ul>
+
+<p>KO works nicely with jQuery (or Prototype, etc.)</p>
+
+
+<h2>Installation</h2>
+<p>Knockout is available through the Bower package manager</p>
+
+<h3>Content Delivery Networks (CDNs)</h3>
+<p>To give your users the fastest download speeds, you might instead prefer to reference knockout.js on one of the following third-party CDNs:</p>
+<ul>
+    <li>Microsoft Ajax CDN</li>
+    <li>CDNJS</li>
+</ul>
+
+<h3>Example</h3>
+
+<pre>
+<code class="language-markup">
+&lt;script type=&#39;text/javascript&#39; src=&#39;knockout-3.4.0.js&#39;&gt;&lt;/script&gt;
+</code>
+</pre>
+<p>View-model declaration:</p>
+<pre>
+<code class="language-javascript">
+var myViewModel = {
+    personName: 'Bob',
+    personAge: 123
+};
+</code>
+</pre>
+
+<p>The <em>data-bind</em> attribute isn’t native to HTML, though it is perfectly OK (it’s strictly compliant in HTML 5, and causes no problems with HTML 4 even though a validator will point out that it’s an unrecognized attribute). But since the browser doesn’t know what it means, you need to activate Knockout to make it take effect.</p>
+<pre>
+<code class="language-markup">
+The name is &lt;span data-bind=&quot;text: personName&quot;&gt;&lt;/span&gt;
+</code>
+</pre>
+<p>Apply binding:</p>
+<pre>
+<code class="language-javascript">
+ko.applyBindings(myViewModel);
+</code>
+</pre>
+<p>Rendered:</p>
+<pre>
+<code class="language-markup">
+The name is <span>Bob</span>
+</code>
+</pre>
+
+<p>or:</p>
+<pre>
+<code class="language-javascript">
+ko.applyBindings(myViewModel, document.getElementById('someElementId'))
+</code>
+</pre>
+
+<h2>Observables</h2>
+
+<p>One of the key benefits of KO is that it updates your UI automatically when the view model changes.  Declare model properties as observables, because these are special JavaScript objects that can notify subscribers about changes, and can automatically detect dependencies.</p>
+
+<ul>
+    <li>
+        Observable properties
+    </li>
+    <li>
+        Observable Arrays
+    </li>
+    <li>
+        Computed properties
+    </li>
+</ul>
+
+
+<h3>Observable properties</h3>
+
+<pre>
+<code class="language-javascript">
+var myViewModel = {
+    personName: ko.observable('Bob'),
+    personAge: ko.observable(123)
+};
+</code>
+</pre>
+
+<h4>Explicitly subscribing to observables</h4>
+<pre>
+<code class="language-javascript">
+myViewModel.personName.subscribe(function(newValue) {
+    alert("The person's new name is " + newValue);
+});
+</code>
+</pre>
+
+<p>Read and write operations which can be performed on Observables.</p>
+
+<h4>Read</h4>
+To read value just call Observable property without parameters like:
+<pre>
+<code class="language-javascript">
+AppViewModel.yourName();
+</code>
+</pre>
+
+<h4>Write</h4>
+To write/update value in Observable property, just pass the desired value in parameter like:
+<pre>
+<code class="language-javascript">
+AppViewModel.yourName('Bob');
+</code>
+</pre>
+
+<h4>Write multiple</h4>
+Multiple ViewModel properties can be updated in a single row with the help of chaining-syntax like:
+<pre>
+<code class="language-javascript">
+AppViewModel.yourName('Bob').yourAge(45);
+</code>
+</pre>
+
+<h3>ObservableArray</h3>
+<p><em>ObservableArray</em> works with collection of objects. This is very useful feature when you are dealing with complex applications containing multiple type of values and changing their status frequently based on user actions.</p>
+<p>Syntax:</p>
+<pre>
+<code class="language-javascript">
+this.arrayName = ko.observableArray();    // It's an empty array
+</code>
+</pre>
+<p>Observable array only tracks which objects in it are added or removed. It does not notify if individual object's properties are modified.</p>
+
+<h3>Computed Observables:</h3>
+<p>Computed Observable is a function which is dependent on one or more Observables and will automatically update whenever its underlying Observables (dependencies) change.</p>
+<p>Computed Observables can be chained.</p>
+
+<pre>
+<code class="language-javascript">
+function AppViewModel() {
+    var me = this;
+ 
+    me.firstName = ko.observable('Bob');
+    me.lastName = ko.observable('Smith');
+    me.fullName = ko.computed(function() {
+        return this.firstName() + " " + this.lastName();
+    }, me);
+}
+</code>
+</pre>
+
+<pre>
+<code class="language-markup">
+The name is &lt;span data-bind=&quot;text: fullName&quot;&gt;&lt;/span&gt;
+</code>
+</pre>
+
+
+<h3>Dependency tracking</h3>
+<p>The tracking algorithm goes like this:</p>
+<ul>
+<li>Whenever you declare a computed observable, KO immediately invokes its evaluator function to get its initial value.</li>
+<li>While the evaluator function is running, KO sets up a subscription to any observables (including other computed observables) that the evaluator reads. The subscription callback is set to cause the evaluator to run again, looping the whole process back to step 1 (disposing of any old subscriptions that no longer apply).</li>
+<li>KO notifies any subscribers about the new value of your computed observable.</li>
+</ul>
+
+
+<h3>Virtual Binding</h3>
+<pre>
+    <code class="language-markup">
+&lt;ul&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;This item always appears&lt;/li&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- ko if: someExpressionGoesHere --&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;li&gt;I want to make this item present/absent dynamically&lt;/li&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;!-- /ko --&gt;
+&lt;/ul&gt;
+    </code>
+</pre>
+
+
+
+<h3>References</h3>
+
+<ul>
+    <li>
+        <a class="reference" href="https://vimeo.com/97519516" title="Steve Sanderson - Architecting large Single Page Applications with Knockout.js">Architecting large Single Page Applications with Knockout.js</a>
+    </li>
+    <li>
+        <a class="reference" href="http://www.knockmeout.net/" title="Ryan Niemeyer">Thoughts, ideas, and discussion about Knockout.js</a>
+    </li>
+</ul>
+
+
+</body>
+</html>

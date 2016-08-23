@@ -1,0 +1,157 @@
+﻿body {
+    font-family: verdana, helvetica, arial, sans-serif;
+    min-width: 760px;
+    background-color: #fff;
+}
+
+h1 {
+    color: #555;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+ul.ts-available-tweets,
+ul.ts-selected-tweets {
+    width: 300px;
+    height: 400px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border: #E6F0F0 solid 1px;
+}
+
+.ts-available-tweets li,
+.ts-selected-tweets li {
+    cursor: pointer;
+}
+
+.ts-available-tweets-search-panel {
+    position: relative;
+    height: 30px;
+    margin: 20px 0 10px 0;
+    border: rgb(230, 240, 240) solid 1px;
+    background-color: #fff;
+}
+
+.ts-available-tweets-search-panel input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: none;
+    width: 260px;
+    height: 30px;
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    font-size: 20px;
+    color: #777;
+    padding: 0 0 0 10px;
+}
+
+.ts-no-search-text {
+    border-color: #f79191;
+    background-color: #f9cece;
+}
+
+.ts-available-tweets-search-panel a:link,
+.ts-available-tweets-search-panel a:visited,
+.ts-available-tweets-search-panel a:hover,
+.ts-available-tweets-search-panel a:active {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: block;
+    height: 30px;
+    width:30px;
+    background: transparent url(../Images/search-button.png) no-repeat 50% 50%;
+}
+
+.ts-searching {
+    background: #fff url(../Images/in-progress.gif) no-repeat 50% 50%;
+    opacity: 0.5;
+}
+
+.ts-tweet {
+    position: relative;
+    padding: 4px;
+    border-bottom: #efefef solid 1px;
+    overflow: hidden;
+}
+
+.ts-tweet article {
+    font-family: verdana, helvetica, arial, sans-serif;
+}
+
+.ts-tweet header {
+    overflow: hidden;
+}
+
+.ts-tweet header time {
+    display: block;
+    font-size: 10px;
+    font-weight: bold;
+    float: right;
+    color: #222;
+}
+
+.ts-tweet .ts-tweet-content {
+    position: relative;
+}
+
+.ts-tweet .ts-tweet-content img {
+    float: left;
+}
+
+.ts-tweet .ts-tweet-content div {
+    margin: 0 0 0 60px;
+}
+
+.ts-tweet .ts-tweet-content div em {
+    display: block;
+    font-weight: bold;
+    font-size: 11px;
+    color: #555;
+}
+
+.ts-tweet .ts-tweet-content div p {
+    margin: 0 0 0 0;
+    font-size: 11px;
+    color: #222;
+}
+
+.ts-available-tweets-section {
+    float: left;
+    margin: 20px 0 20px 10px;
+}
+
+.ts-selected-tweets-section {
+    float: right;
+    margin: 20px 10px 0 10px;
+}
+
+.ts-selected-tweets-section h4 {
+    color: #555;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 30px;
+    margin: 20px 0 10px;
+}
+
+#wrapper {
+    width: 760px;
+}
+
+#content {
+    overflow: hidden;
+    background: transparent url(../Images/right-arrow-small.png) no-repeat 50% 50%;
+}
+
+#footer {
+    clear: both;
+    margin: 100px 10px 10px 10px;
+    font-size: 9px;
+}
+

@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Tweet Saver</title>
+    <link href="CSS/TweetSaver.css" rel="stylesheet" />
+</head>
+<body>
+    <form id="form1">
+    <div id="wrapper">
+        <header>
+            <h1>Tweet Saver</h1>
+        </header>
+        <div id="content">
+
+            <script type="text/html" id="tweet-template">
+                <article>
+                    <header>
+                        <time data-bind="showTweetDate: true"></time>
+                    </header>
+                    <div class="ts-tweet-content">
+                        <img data-bind="attr: { 'src': user.profileImageURL }" alt=""/>
+                        <div>
+                            <em data-bind="text: user.name"></em>
+                            <p data-bind="text: text"></p>
+                        </div>
+                    </div>
+                </article>
+            </script>
+
+            <section class="ts-available-tweets-section">
+                <div class="ts-available-tweets-search-panel" data-bind="css: { 'ts-no-search-text': !searchable()}">
+                    <input type="text" placeholder="Search..." data-bind="value: searchText"/>
+                    <a href="javascript:void(0)" data-bind="click: searchTweets" title="Search"></a>
+                </div>
+
+                <ul class="ts-available-tweets" data-bind="foreach: availableTweets, css: { 'ts-searching': searching() }">
+                    <li class="ts-tweet" data-bind="template: { name: 'tweet-template' }"></li>
+                </ul>
+            </section>
+
+            <section class="ts-selected-tweets-section">
+                <h4>Saved Tweets:</h4>
+                <ul class="ts-selected-tweets" data-bind="foreach: selectedTweets">
+                    <li class="ts-tweet" data-bind="template: { name: 'tweet-template' }"></li>
+                </ul>
+            </section>
+
+        </div>
+
+        <footer id="footer">
+            <p>Roman Kolotygin (<abbr title="Web UI Developer">Web UI Developer</abbr>)</p>
+        </footer>
+    </div>
+    </form>
+
+    <script src="Scripts/jquery.min.js"></script>
+    <script src="Scripts/jquery.ui.core.min.js"></script>
+    <script src="Scripts/jquery.ui.widget.min.js"></script>
+    <script src="Scripts/jquery.ui.mouse.min.js"></script>
+    <script src="Scripts/jquery.ui.sortable.min.js"></script>
+    <script src="Scripts/knockout.js"></script>
+    <script src="Scripts/extensions.js"></script>
+    <script src="Scripts/TweetSaver.js"></script>
+
+</body>
+</html>
